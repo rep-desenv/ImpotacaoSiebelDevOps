@@ -98,7 +98,22 @@ Module ApagarObjetos
 
         DeletaRGN = True
 
+        fs = New FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "trace_delete_rgn.log", FileMode.Append)
+        mysw = New StreamWriter(fs, System.Text.Encoding.Default)
 
+
+        mysw.WriteLine("[" & sUserName & "] " & Now + " - VERSÃO: 4.7.8.3")
+        Console.WriteLine(Now + " - VERSÃO: 4.7.8.3")
+
+
+        mysw.WriteLine("[" & sUserName & "] " & Now + " - Entrada na função: DeletaRGN(linhaTexto) ")
+        'mysw.Close()
+
+        Console.WriteLine(Now + " - Entrada na função: DeletaRGN(linhaTexto) ")
+
+
+        mysw.WriteLine("[" & sUserName & "] " & Now + " - Recuperando Código da RGN no XML - Inicio")
+        Console.WriteLine(Now + " - Recuperando Código da RGN no XML - Inicio")
 
         Dim texto As New StreamReader(sArq, System.Text.Encoding.Default)
         While Not texto.EndOfStream
@@ -116,19 +131,31 @@ Module ApagarObjetos
         'Console.WriteLine(IdRegra)
         'Console.Read()
 
+        ''@Trace
+        'mysw.WriteLine("[" & sUserName & "] " & Now + " - Recuperando Código da RGN - Fim")
+        'Console.WriteLine(Now + " - Recuperando Código da RGN no XML - Fim")
 
         Try
 
             If Conexao = "DataServer" Then
 
+                mysw.WriteLine("[" & sUserName & "] " & Now + " - Instanciando BO e BC's - Inicio")
+                Console.WriteLine(Now + " - Instanciando BO e BC's - Inicio")
 
                 oBORGN = SiebelApplication.GetBusObject("PCS RN - Regra", errCode)
-                oBCRGN = oBORGN.GetBusComp("PCS RN - Regra", errCode)
-                oBCRGNCond = oBORGN.GetBusComp("PCS RN - Regra Condicao", errCode)
-                oBCRGNEvento = oBORGN.GetBusComp("PCS RN - Regra Evento", errCode)
-                oBCRGNAcaoRegra = oBORGN.GetBusComp("PCS RN - Instancias de Acao em Regras", errCode)
-                oBCRGNInputsAcao = oBORGN.GetBusComp("PCS RN - Inputs de Instancia de Acao", errCode)
 
+                oBCRGN = oBORGN.GetBusComp("PCS RN - Regra", errCode) '### Regras de Negócio
+                oBCRGNCond = oBORGN.GetBusComp("PCS RN - Regra Condicao", errCode) '### Condição da Regra de Negócio
+                oBCRGNEvento = oBORGN.GetBusComp("PCS RN - Regra Evento", errCode) '### Eventos que Executam a Regra de Negócio
+
+                oBCRGNAcaoRegra = oBORGN.GetBusComp("PCS RN - Instancias de Acao em Regras", errCode) '### Ações Executadas pela Regra
+                oBCRGNInputsAcao = oBORGN.GetBusComp("PCS RN - Inputs de Instancia de Acao", errCode) '### Parâmetros da Ação
+
+                mysw.WriteLine("[" & sUserName & "] " & Now + " - Instanciando BO e BC's - Fim")
+                Console.WriteLine(Now + " - Instanciando BO e BC's - Fim")
+
+                mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGN => PCS RN - Regra - Inicio")
+                Console.WriteLine(Now + " - Lendo Registro: oBCRGN => PCS RN - Regra - Inicio")
 
                 With oBCRGN
                     .ClearToQuery(errCode)
@@ -145,53 +172,149 @@ Module ApagarObjetos
 
                     If IsRecord <> 0 Then
                         While IsRecord <> 0
+
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Setando Flag: .SetFieldValue(""PCS Locked Flg"", ""Y"", errCode) - Inicio")
+                            'Console.WriteLine(Now + " - Setando Flag: .SetFieldValue(""PCS Locked Flg"", ""Y"", errCode) - Inicio")
+
                             .SetFieldValue("PCS Locked Flg", "Y", errCode)
                             .WriteRecord(errCode)
+
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Setando Flag: .SetFieldValue(""PCS Locked Flg"", ""Y"", errCode) - Fim")
+                            'Console.WriteLine(Now + " - Setando Flag: .SetFieldValue(""PCS Locked Flg"", ""Y"", errCode) - Fim")
+
+                            '@@@@@@@ CONDIÇÃO DA REGRA DE NEGÓCIO - INCIO @@@@@@@
+
+ExecutaQuerieCondRN:
+                            With oBCRGNCond
+
+                                ''@Trace
+                                'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNCond => PCS RN - Regra Condicao - Inicio")
+                                'Console.WriteLine(Now + " - Lendo Registro: oBCRGNCond => PCS RN - Regra Condicao - Inicio")
+
+                                .ClearToQuery(errCode)
+                                .SetViewMode(1, errCode)
+                                .SetSearchSpec("PCS Codigo Pai", IdRegra, errCode)
+                                .SetSearchSpec("PCS Tipo Objeto", "RN.Condicao", errCode)
+
+                                .ExecuteQuery(True, errCode)
+                                IsRecord1 = .FirstRecord(errCode)
+
+                                If IsRecord1 <> 0 Then
+                                    ''@Trace
+                                    'mysw.WriteLine("[" & sUserName & "] " & Now + " - Deletando Registro - inicio")
+                                    'Console.WriteLine(Now + " - Deletando Registro - inicio")
+
+                                    While IsRecord1 <> 0
+                                        .DeleteRecord(errCode)
+                                        IsRecord1 = .NextRecord(errCode)
+                                    End While
+
+                                    ''@Trace
+                                    'mysw.WriteLine("[" & sUserName & "] " & Now + " - Deletando Registro - Fim")
+                                    'Console.WriteLine(Now + " - Deletando Registro - Fim")
+                                End If
+
+                            End With
+
+
+                            ''@Trace
+                            ''mysw.WriteLine("[" & sUserName & "] " & Now + " - Verificando se Ainda Há resgitro")
+                            ''Console.WriteLine(Now + " - Verificando se Ainda Há resgitro")
 
                             With oBCRGNCond
 
                                 .ClearToQuery(errCode)
                                 .SetViewMode(1, errCode)
                                 .SetSearchSpec("PCS Codigo Pai", IdRegra, errCode)
+                                .SetSearchSpec("PCS Tipo Objeto", "RN.Condicao", errCode)
+
                                 .ExecuteQuery(True, errCode)
                                 IsRecord1 = .FirstRecord(errCode)
 
                                 If IsRecord1 <> 0 Then
-                                    While IsRecord1 <> 0
-
-                                        With oBCRGNEvento
-
-                                            .ClearToQuery(errCode)
-                                            .SetViewMode(1, errCode)
-
-                                            .SetSearchSpec("PCS Codigo Pai", IdRegra, errCode)
-                                            .SetSearchSpec("PCS Codigo Pai", IdRegra, errCode)
-                                            .ExecuteQuery(True, errCode)
-                                            IsRecord2 = .FirstRecord(errCode)
-
-                                            If IsRecord2 <> 0 Then
-                                                While IsRecord2 <> 0
-                                                    .DeleteRecord(errCode)
-                                                    IsRecord2 = .NextRecord(errCode)
-                                                End While
-                                            End If
-
-                                        End With
-
-                                        .DeleteRecord(errCode)
-                                        IsRecord1 = .NextRecord(errCode)
-                                    End While
-
+                                    GoTo ExecutaQuerieCondRN
                                 End If
-
 
                             End With
 
-                            With oBCRGNAcaoRegra
+                            ''@Trace
+                            ''mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNCond => PCS RN - Regra Condicao - Fim")
+                            ''Console.WriteLine(Now + " - Lendo Registro: oBCRGNCond => PCS RN - Regra Condicao - Fim")
+
+                            '@@@@@@@ CONDIÇÃO DA REGRA DE NEGÓCIO - FIM @@@@@@@
+
+
+                            '@@@@@@@ EVENTOS QUE EXECUTAM A REGRA DE NEGÓCIO - INCIO @@@@@@@
+ExecutaQuerieEVento:
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNEvento => PCS RN - Regra Evento - Inicio")
+                            'Console.WriteLine(Now + " - Lendo Registro: oBCRGNEvento => PCS RN - Regra Evento - Inicio")
+
+                            With oBCRGNEvento
 
                                 .ClearToQuery(errCode)
                                 .SetViewMode(1, errCode)
+
+                                .SetSearchSpec("PCS Codigo Pai", IdRegra, errCode)
+                                .SetSearchSpec("PCS Tipo Objeto", "RN.Evento", errCode)
+                                .ExecuteQuery(True, errCode)
+                                IsRecord2 = .FirstRecord(errCode)
+
+                                If IsRecord2 <> 0 Then
+                                    ''@Trace
+                                    'mysw.WriteLine("[" & sUserName & "] " & Now + " - Deletando Registro - inicio")
+                                    'Console.WriteLine(Now + " - Deletando Registro - inicio")
+                                    While IsRecord2 <> 0
+                                        .DeleteRecord(errCode)
+                                        IsRecord2 = .NextRecord(errCode)
+                                    End While
+                                    ''@Trace
+                                    'mysw.WriteLine("[" & sUserName & "] " & Now + " - Deletando Registro - Fim")
+                                    'Console.WriteLine(Now + " - Deletando Registro - Fim")
+                                End If
+
+                            End With
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Verificando se Ainda Há resgitro")
+                            'Console.WriteLine(Now + " - Verificando se Ainda Há resgitro")
+
+                            With oBCRGNEvento
+
+                                .ClearToQuery(errCode)
+                                .SetViewMode(1, errCode)
+
+                                .SetSearchSpec("PCS Codigo Pai", IdRegra, errCode)
+                                .SetSearchSpec("PCS Tipo Objeto", "RN.Evento", errCode)
+                                .ExecuteQuery(True, errCode)
+                                IsRecord2 = .FirstRecord(errCode)
+
+                                If IsRecord2 <> 0 Then
+                                    GoTo ExecutaQuerieEVento
+                                End If
+
+                            End With
+
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNEvento => PCS RN - Regra Evento - Fim")
+                            'Console.WriteLine(Now + " - Lendo Registro: oBCRGNEvento => PCS RN - Regra Evento - Fim")
+
+                            '@@@@@@@ EVENTOS QUE EXECUTAM A REGRA DE NEGÓCIO - FIM @@@@@@@
+
+
+                            '@@@@@@@ AÇÕES EXECUTADAS PELA REGRA/PARÂMETROS DA AÇÃO - INICIO @@@@@@@
+
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNAcaoRegra => PCS RN - Instancias de Acao em Regras - Inicio")
+                            'Console.WriteLine(Now + " - Lendo Registro: oBCRGNAcaoRegra => PCS RN - Instancias de Acao em Regras - Inicio")
+
+                            With oBCRGNAcaoRegra
+ExecutaQuerieAcao:
+                                .ClearToQuery(errCode)
+                                .SetViewMode(1, errCode)
                                 .SetSearchSpec("PCS Regra Id", IdRegra, errCode)
+                                .SetSearchSpec("PCS Tipo Objeto", "RN.InstanciaDeAcao", errCode)
                                 .ExecuteQuery(True, errCode)
                                 IsRecord3 = .FirstRecord(errCode)
 
@@ -200,21 +323,57 @@ Module ApagarObjetos
                                     While IsRecord3 <> 0
 
                                         IdAcRegra = .GetFieldValue("PCS Codigo", errCode)
+ExecutaQuerieParam:
+                                        ''@Trace
+                                        'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNInputsAcao => PCS RN - Inputs de Instancia de Acao - Inicio")
+                                        'Console.WriteLine(Now + " - Lendo Registro: oBCRGNInputsAcao => PCS RN - Inputs de Instancia de Acao - Inicio")
+                                        With oBCRGNInputsAcao
+                                            .ClearToQuery(errCode)
+                                            .SetViewMode(1, errCode)
+                                            .SetSearchSpec("PCS Instancia Acao Id", IdAcRegra, errCode)
+                                            .SetSearchSpec("PCS Tipo Objeto", "RN.InputInstanciaAcao", errCode)
+                                            .ExecuteQuery(True, errCode)
+                                            IsRecord4 = .FirstRecord(errCode)
+
+                                            If IsRecord4 <> 0 Then
+                                                ''@Trace
+                                                'mysw.WriteLine("[" & sUserName & "] " & Now + " - Deletando Registro - inicio")
+                                                'Console.WriteLine(Now + " - Deletando Registro - inicio")
+                                                While IsRecord4 <> 0
+                                                    .DeleteRecord(errCode)
+                                                    IsRecord4 = .NextRecord(errCode)
+                                                End While
+                                                ''@Trace
+                                                'mysw.WriteLine("[" & sUserName & "] " & Now + " - Deletando Registro - Fim")
+                                                'Console.WriteLine(Now + " - Deletando Registro - Fim")
+                                            End If
+                                        End With
+
+                                        '@Trace
+                                        ''mysw.WriteLine("[" & sUserName & "] " & Now + " - Verificando se Ainda Há resgitro")
+                                        ''Console.WriteLine(Now + " - Verificando se Ainda Há resgitro")
 
                                         With oBCRGNInputsAcao
                                             .ClearToQuery(errCode)
                                             .SetViewMode(1, errCode)
                                             .SetSearchSpec("PCS Instancia Acao Id", IdAcRegra, errCode)
+                                            .SetSearchSpec("PCS Tipo Objeto", "RN.InputInstanciaAcao", errCode)
                                             .ExecuteQuery(True, errCode)
                                             IsRecord4 = .FirstRecord(errCode)
 
                                             If IsRecord4 <> 0 Then
-                                                While IsRecord4 <> 0
-                                                    .DeleteRecord(errCode)
-                                                    IsRecord4 = .NextRecord(errCode)
-                                                End While
+                                                GoTo ExecutaQuerieParam
                                             End If
+
                                         End With
+
+                                        ''@Trace
+                                        'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNInputsAcao => PCS RN - Inputs de Instancia de Acao - Fim")
+                                        'Console.WriteLine(Now + " - Lendo Registro: oBCRGNInputsAcao => PCS RN - Inputs de Instancia de Acao - Fim")
+
+                                        ''@Trace
+                                        'mysw.WriteLine("[" & sUserName & "] " & Now + " - Deletando Acao Regra")
+                                        'Console.WriteLine(Now + " - Deletando Acao Regra")
 
                                         .DeleteRecord(errCode)
                                         IsRecord3 = .NextRecord(errCode)
@@ -222,18 +381,56 @@ Module ApagarObjetos
                                     End While
                                 End If
 
+                                ''@Trace
+                                'mysw.WriteLine("[" & sUserName & "] " & Now + " - Verificando se Ainda Há Instancias de Acao em Regras - Inicio")
+                                'Console.WriteLine(Now + " - Verificando se Ainda Há Instancias de Acao em Regras - Inicio")
+                                With oBCRGNAcaoRegra
 
+                                    .ClearToQuery(errCode)
+                                    .SetViewMode(1, errCode)
+                                    .SetSearchSpec("PCS Regra Id", IdRegra, errCode)
+                                    .SetSearchSpec("PCS Tipo Objeto", "RN.InstanciaDeAcao", errCode)
+                                    .ExecuteQuery(True, errCode)
+                                    IsRecord3 = .FirstRecord(errCode)
 
-                            End With
+                                    If IsRecord3 <> 0 Then
+                                        GoTo ExecutaQuerieAcao
+                                    End If
 
+                                End With
+                                ''@Trace
+                                'mysw.WriteLine("[" & sUserName & "] " & Now + " - Verificando se Ainda Há Instancias de Acao em Regras - Fim")
+                                'Console.WriteLine(Now + " - Verificando se Ainda Há Instancias de Acao em Regras - Fim")
+
+                                End With
+
+                            '@@@@@@@ AÇÕES EXECUTADAS PELA REGRA/PARÂMETROS DA AÇÃO - FIM @@@@@@@
+
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGNAcaoRegra => PCS RN - Instancias de Acao em Regras - Fim")
+                            'Console.WriteLine(Now + " - Lendo Registro: oBCRGNAcaoRegra => PCS RN - Instancias de Acao em Regras - Fim")
+
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Apagando Regra")
+                            'Console.WriteLine("[" & sUserName & "] " & Now + " - Apagando Regra")
 
                             .DeleteRecord(errCode)
-                            Console.WriteLine("Apagou RGN")
-                            IsRecord = .NextRecord(errCode)
+                            ''@Trace
+                            'mysw.WriteLine("[" & sUserName & "] " & Now + " - Apagou Regra")
+                                Console.WriteLine("Apagou RGN")
+                                IsRecord = .NextRecord(errCode)
                         End While
                     End If
 
                 End With
+
+                ''@Trace
+                'mysw.WriteLine("[" & sUserName & "] " & Now + " - Lendo Registro: oBCRGN => PCS RN - Regra - Fim")
+                'Console.WriteLine(Now + " - Lendo Registro: oBCRGN => PCS RN - Regra - Fim")
+
+                'mysw.WriteLine("[" & sUserName & "] " & Now + " - Enviado para WKF de Importação.")
+                'Console.WriteLine(Now + " - Enviado para WKF de Importação.")
+
+                'mysw.Close()
 
                 oBCRGN = Nothing
                 oBCRGNEvento = Nothing
@@ -242,6 +439,7 @@ Module ApagarObjetos
                 oBCRGNAcaoRegra = Nothing
                 oBCRGNInputsAcao = Nothing
 
+                'DeletaRGN = False
 
             Else  ''''''''' NÃO ESTÁ SENDO MAIS USADO '''''''
 
@@ -685,9 +883,12 @@ Module ApagarObjetos
             If Conexao = "DataServer" Then
 
                 oBOCRGN = SiebelApplication.GetBusObject("DevOps FRep PCS RN - Consulta Migracao", errCode)
-                oBCCRGN = oBOCRGN.GetBusComp("DevOps FRep PCS RN - Consulta Migracao", errCode)
-                oBCConfig = oBOCRGN.GetBusComp("DevOps FRep PCS RCL - Consulta Configuracao Migracao", errCode)
-                oBCCampos = oBOCRGN.GetBusComp("DevOps FRep PCS RCL - Consulta Field Migracao", errCode)
+
+                oBCCRGN = oBOCRGN.GetBusComp("DevOps FRep PCS RN - Consulta Migracao", errCode) '@@@ Regras de Negócio
+
+                oBCConfig = oBOCRGN.GetBusComp("DevOps FRep PCS RCL - Consulta Configuracao Migracao", errCode) '@@@ Condições da Regra de Negocio
+
+                oBCCampos = oBOCRGN.GetBusComp("DevOps FRep PCS RCL - Consulta Field Migracao", errCode) '@@@ 
 
                 With oBCCRGN
                     .ClearToQuery(errCode)
@@ -765,8 +966,12 @@ Module ApagarObjetos
 
                 End With
 
+                mysw.Close()
+
                 oBCAPPCRGN = Nothing
                 oBOAPPCRGN = Nothing
+
+
 
             End If
 
