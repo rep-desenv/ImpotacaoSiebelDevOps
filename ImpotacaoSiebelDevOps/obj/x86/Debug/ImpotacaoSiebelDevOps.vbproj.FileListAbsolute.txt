@@ -20,9 +20,13 @@ C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\Imp
 C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
 C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
 C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
-C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelApplicationServer.dll
-C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelDataServer.dll
-C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.vbproj.ResolveComReference.cache
-C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
-C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
-C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelApplicationServer.dll
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelDataServer.dll
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.vbproj.ResolveComReference.cache
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.Resources.resources
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Projetos\Mapa de Valores EAI\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.write.1.tlog

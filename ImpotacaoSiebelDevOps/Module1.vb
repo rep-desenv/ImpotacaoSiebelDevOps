@@ -698,6 +698,12 @@ Module Module1
                                     End If
                                 End If
 
+                                '@@@ Deletando Mapa de Valores EAI @@@
+                                If InStr(linhaTexto, "EVL_") <> 0 Then
+                                    If DeletaEVL(linhaTexto) = False Then
+                                        GoTo Proximo
+                                    End If
+                                End If
                                
 
                                 If (RetornoValida = "Ok" Or sRepositorio.ToUpper = "OUT") Then
@@ -991,6 +997,12 @@ Proximo:
                                     End If
                                 End If
 
+                                '@@@ Deletando Mapa de Valores EAI @@@
+                                If InStr(linhaTexto, "EVL_") <> 0 Then
+                                    If DeletaEVL(linhaTexto) = False Then
+                                        GoTo Proximo
+                                    End If
+                                End If
 
 
                                 If (RetornoValida = "Ok" Or sRepositorio.ToUpper = "OUT") Then
@@ -1211,20 +1223,28 @@ Erro:
         ''Versão 4.7.4 -  Alterado para colocar EDM como overwrite
         ''Versão 4.7.5 -  Alterado para colocar Business Service Client
 
+        ''Versão 4.7.6 -  Alterado para Apagar Mapas de Valores EAI
 
 
         Dim sDiretorioArquivoBatch As String '' Arquivo a ser processado
 
 
 
-        Console.WriteLine("ImportacaoSiebelDevops Versão 4.7.5")
+        Console.WriteLine("ImportacaoSiebelDevops Versão 4.7.6")
 
         Try
-            sCFG = args(0)
-            sUserName = args(1)
-            sPassword = Trim$(args(2))
-            sDiretorioArquivoBatch = Trim$(args(3))
-            sRepositorio = Trim$(args(4))
+            'sCFG = "c:\sea630\client\bin\scomm_B10.cfg"
+            sCFG = "c:\sea630\client\bin\scomm_local.cfg"
+            sUserName = "E_CARVALHO"
+            sPassword = "E_CARVALHO"
+            sDiretorioArquivoBatch = "C:\Importacao\migra.txt"
+            sRepositorio = "OUT"
+
+            'sCFG = args(0)
+            'sUserName = args(1)
+            'sPassword = Trim$(args(2))
+            'sDiretorioArquivoBatch = Trim$(args(3))
+            'sRepositorio = Trim$(args(4))
             ''Trace = Trim$(args(5))
 
             Console.WriteLine("CFG :  " + sCFG)
