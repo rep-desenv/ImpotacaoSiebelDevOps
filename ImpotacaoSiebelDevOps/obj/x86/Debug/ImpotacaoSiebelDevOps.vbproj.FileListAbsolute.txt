@@ -1,0 +1,28 @@
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.Resources.resources
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelApplicationServer.dll
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelDataServer.dll
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.vbproj.ResolveComReference.cache
+C:\ImpotacaoSiebelDevOps.exe
+C:\ImpotacaoSiebelDevOps.pdb
+C:\ImpotacaoSiebelDevOps.xml
+C:\Importacao\ImportacaoSiebelDevOps.exe
+C:\Importacao\ImportacaoSiebelDevOps.pdb
+C:\Importacao\ImportacaoSiebelDevOps.xml
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
+C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
+C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelApplicationServer.dll
+C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelDataServer.dll
+C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.vbproj.ResolveComReference.cache
+C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
+C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
+C:\Documents and Settings\Administrador\Desktop\VB.NET\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
+C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelApplicationServer.dll
+C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelDataServer.dll
+C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.vbproj.ResolveComReference.cache
+C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
+C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
+C:\Projetos\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
