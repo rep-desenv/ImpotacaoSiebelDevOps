@@ -674,6 +674,8 @@ Module Module1
                     Dim inputs = Siebel.NewPropertySet(errCode)
                     Dim outputs = Siebel.NewPropertySet(errCode)
 
+
+
                     inputs.SetProperty("ProcessName", "DevOps_Importa_XML_Object", errCode)
 
 
@@ -691,6 +693,7 @@ Module Module1
                                         GoTo Proximo
                                     End If
                                 End If
+
 
                                 If InStr(linhaTexto, "RGN_") <> 0 Then
                                     If DeletaRGN(linhaTexto) = False Then
@@ -1004,7 +1007,6 @@ Proximo:
                                     End If
                                 End If
 
-
                                 If (RetornoValida = "Ok" Or sRepositorio.ToUpper = "OUT") Then
 
                                     If (InStr(linhaTexto, "PAR_") <> 0 Or InStr(linhaTexto, "SPR_") <> 0 Or InStr(linhaTexto, "TRD_") <> 0 Or InStr(linhaTexto, "LOV_") <> 0) Then '' Or InStr(linhaTexto, "EDM_") <> 0
@@ -1223,29 +1225,28 @@ Erro:
         ''Versão 4.7.4 -  Alterado para colocar EDM como overwrite
         ''Versão 4.7.5 -  Alterado para colocar Business Service Client
 
-        ''Versão 4.7.6 -  Alterado para Apagar Mapas de Valores EAI
+        ''Versão 4.7.7 -  Alterado para Apagar Regras de Negócio - Ordem para deletes
+        ''Versão 4.7.8 - Incluída versão para Apagar Mapas de Valores EAI
 
 
         Dim sDiretorioArquivoBatch As String '' Arquivo a ser processado
 
-
-
-        Console.WriteLine("ImportacaoSiebelDevops Versão 4.7.6")
+        Console.WriteLine("ImportacaoSiebelDevops Versão 4.7.8")
 
         Try
-            'sCFG = "c:\sea630\client\bin\scomm_B10.cfg"
-            sCFG = "c:\sea630\client\bin\scomm_local.cfg"
-            sUserName = "E_CARVALHO"
-            sPassword = "E_CARVALHO"
-            sDiretorioArquivoBatch = "C:\Importacao\migra.txt"
-            sRepositorio = "OUT"
+            ''sCFG = "c:\sea630\client\bin\scomm_B10.cfg"
+            'sCFG = "c:\sea630\client\bin\scomm_local.cfg"
+            'sUserName = "E_CARVALHO"
+            'sPassword = "E_CARVALHO"
+            'sDiretorioArquivoBatch = "C:\Importacao\migra.txt"
+            'sRepositorio = "OUT"
 
-            'sCFG = args(0)
-            'sUserName = args(1)
-            'sPassword = Trim$(args(2))
-            'sDiretorioArquivoBatch = Trim$(args(3))
-            'sRepositorio = Trim$(args(4))
-            ''Trace = Trim$(args(5))
+            sCFG = args(0)
+            sUserName = args(1)
+            sPassword = Trim$(args(2))
+            sDiretorioArquivoBatch = Trim$(args(3))
+            sRepositorio = Trim$(args(4))
+            'Trace = Trim$(args(5))
 
             Console.WriteLine("CFG :  " + sCFG)
             Console.WriteLine("UserName : " + sUserName)
@@ -1298,5 +1299,9 @@ Erro:
 
 
     End Sub
+
+    Private Function sDiretoSystem() As Object
+        Throw New NotImplementedException
+    End Function
 
 End Module
