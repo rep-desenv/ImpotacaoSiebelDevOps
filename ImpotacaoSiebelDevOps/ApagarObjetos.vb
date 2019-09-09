@@ -2,6 +2,7 @@
 Imports System.IO.Directory
 Imports System.Security
 Imports System.Text
+Imports System.Xml
 
 Module ApagarObjetos
 
@@ -183,7 +184,7 @@ Module ApagarObjetos
 
                                 End If
 
-                               
+
                             End With
 
                             With oBCRGNAcaoRegra
@@ -221,15 +222,13 @@ Module ApagarObjetos
                                     End While
                                 End If
 
-                                '@@@ movemos para cá
-                                .DeleteRecord(errCode)
-                                Console.WriteLine("Apagou RGN")
+
 
                             End With
 
-                            '@@@ retiramos daqui
-                            '.DeleteRecord(errCode)
-                            'Console.WriteLine("Apagou RGN")
+
+                            .DeleteRecord(errCode)
+                            Console.WriteLine("Apagou RGN")
                             IsRecord = .NextRecord(errCode)
                         End While
                     End If
@@ -353,6 +352,8 @@ Module ApagarObjetos
                     .SetSearchSpec("Type", sLOV, errCode)
                     .ExecuteQuery(False, errCode)
                     IsRecord = .FirstRecord(errCode)
+
+                    'MsgBox(.GetFieldValue("Type", errCode))
 
                     If IsRecord <> 0 Then
                         While IsRecord <> 0
@@ -803,5 +804,192 @@ Module ApagarObjetos
 
         End Try
     End Function
+
+
+    Public Function DeletaEVL(ByVal sArq As String) As Boolean
+
+        Dim RetList As Integer = 0
+        Dim sEVL(3) As String
+        'Dim sLista As String
+        Dim SiebelApp As Object
+        Dim IsRecord As Integer
+
+        Dim oBOEVL As SiebelApplicationServer.SiebelBusObject
+        Dim oBCEVL As SiebelApplicationServer.SiebelBusComp
+
+        Dim oBODev As SiebelDataServer.SiebelBusObject
+        Dim oBCDev As SiebelDataServer.SiebelBusComp
+
+
+        'Dim Linha As String
+        'Dim Tamanho As Integer
+
+
+        DeletaEVL = True
+
+        'Cria uma instância de um documento XML
+        Dim oXML As New XmlDocument
+
+        'Define o caminho do arquivo XML 
+        Dim ArquivoXML As String = sArq
+        'carrega o arquivo XML
+        oXML.Load(ArquivoXML)
+
+        Dim sTipo As String = oXML.SelectSingleNode("SiebelMessage").ChildNodes(0).ChildNodes(0).ChildNodes(0).InnerText
+        Dim sEndereco As String = oXML.SelectSingleNode("SiebelMessage").ChildNodes(0).ChildNodes(0).ChildNodes(1).InnerText
+
+
+        Try
+
+            If Conexao = "DataServer" Then
+
+                oBODev = SiebelApplication.GetBusObject("EAI Lookup Map", errCode)
+                oBCDev = oBODev.GetBusComp("EAI Lookup Map", errCode)
+
+ExecutaQuerie:
+
+                With oBCDev
+                    .ClearToQuery(errCode)
+                    .SetViewMode(1, errCode)
+                    .ActivateField("Type", errCode)
+                    .ActivateField("Direction", errCode)
+
+                    .SetSearchSpec("Direction", sEndereco, errCode)
+                    .SetSearchSpec("Type", sTipo, errCode)
+
+                    .ExecuteQuery(True, errCode)
+                    IsRecord = .FirstRecord(errCode)
+
+                    If IsRecord <> 0 Then
+                        While IsRecord <> 0
+                            .DeleteRecord(errCode)
+                            IsRecord = .NextRecord(errCode)
+                        End While
+                    End If
+                End With
+
+
+                With oBCDev
+                    .ClearToQuery(errCode)
+                    .SetViewMode(1, errCode)
+                    .ActivateField("Type", errCode)
+                    .ActivateField("Direction", errCode)
+
+                    .SetSearchSpec("Direction", sEndereco, errCode)
+                    .SetSearchSpec("Type", sTipo, errCode)
+
+
+                    .ExecuteQuery(True, errCode)
+                    IsRecord = .FirstRecord(errCode)
+
+                    If IsRecord <> 0 Then
+                        GoTo ExecutaQuerie
+                    End If
+
+                End With
+
+                oBCDev = Nothing
+                oBODev = Nothing
+
+            Else
+
+                Try
+
+
+                    SiebelApp = GetObject("", "SiebelAppServer.ApplicationObject")
+
+                    oBOEVL = SiebelApp.GetBusObject("EAI Lookup Map", errCode)
+                    oBCEVL = oBOEVL.GetBusComp("EAI Lookup Map", errCode)
+
+
+
+                    With oBCEVL
+                        .ClearToQuery(errCode)
+                        .SetViewMode(1, errCode)
+                        .ActivateField("Dierection", errCode)
+                        .ActivateField("Type", errCode)
+                        .SetSearchSpec("Direction", sEndereco, errCode)
+                        .SetSearchSpec("Type", sTipo, errCode)
+
+                        .ExecuteQuery(True, errCode)
+                        IsRecord = .FirstRecord(errCode)
+
+
+                        '' If Trace.Length > 0 Then
+                        ''Siebel.TraceOn(Trace, "SQL", "TESTE", errCode)
+                        '' End If
+
+                        If IsRecord <> 0 Then
+                            While IsRecord <> 0
+                                .DeleteRecord(errCode)
+                                Console.WriteLine("Apaguei Mapa de Valores EAI ")
+                                IsRecord = .NextRecord(errCode)
+                            End While
+                        End If
+
+                    End With
+
+                    ''If Trace.Length > 0 Then
+                    ''Siebel.TraceOff(errCode)
+                    '' End If
+
+
+                    oBCEVL = Nothing
+                    oBOEVL = Nothing
+
+                Catch ex As Exception
+
+                    If InStr(ex.Message, "ActiveX") > 0 Then
+
+                        Console.WriteLine("AppServer - Erro de conexão com Siebel Client: " + Err.Description)
+                        Console.WriteLine("Favor abrir o Siebel Client e repetir a operação !")
+
+                        fs = New FileStream(sDiretorioErro + NomeArquivoLog, FileMode.Append)
+                        mysw = New StreamWriter(fs, System.Text.Encoding.Default)
+                        mysw.WriteLine("[" & sUserName & "] " & Now + " - AppServer - Erro Exception de conexão com Siebel Client: " + Err.Description)
+                        mysw.Close()
+
+                        DeletaEVL = False
+
+                        Exit Function
+
+                    Else
+
+                        fs = New FileStream(sDiretorioErro + NomeArquivoLog, FileMode.Append)
+                        mysw = New StreamWriter(fs, System.Text.Encoding.Default)
+                        mysw.WriteLine("[" & sUserName & "] " & Now + " - AppServer - Erro Exception DeletaEVL Descricao  : " + ex.Message)
+                        mysw.Close()
+
+                        Console.WriteLine("AppServer - Erro Exception DeletaEVL Descricao  : " + ex.Message)
+
+                        DeletaEVL = False
+
+                    End If
+
+                End Try
+
+            End If
+
+
+        Catch ex As Exception
+
+
+            Console.WriteLine("XML  : " + sArq)
+            Console.WriteLine("Erro Exception DeletaEVL  : " + ex.Message)
+
+
+            fs = New FileStream(sDiretorioErro + NomeArquivoLog, FileMode.Append)
+            mysw = New StreamWriter(fs, System.Text.Encoding.Default)
+            mysw.WriteLine("[" & sUserName & "] " & Now + " - Erro Exception DeletaEVL : " & sArq)
+            mysw.WriteLine("[" & sUserName & "] " & Now + " - Erro Exception DeletaEVL : " + Err.Description)
+            mysw.Close()
+
+            DeletaEVL = False
+
+        End Try
+
+
+    End Function
+
 
 End Module
