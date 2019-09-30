@@ -1228,10 +1228,19 @@ Erro:
         ''Versão 4.7.7 -  Alterado para Apagar Regras de Negócio - Ordem para deletes
         ''Versão 4.7.8 - Incluída versão para Apagar Mapas de Valores EAI
 
+        ''Versão 4.7.9 - Ajuste no processo de delete de Propety da Ação de Regras de Negócio;
+        ''               Ajuste na exibição da versão do programa;
+        ''               Ajuste no processo de delete de RNG;
+        ''               Ajuste no processo de delete de EVL;
+
 
         Dim sDiretorioArquivoBatch As String '' Arquivo a ser processado
 
-        Console.WriteLine("ImportacaoSiebelDevops Versão 4.7.8")
+        'Console.WriteLine("ImportacaoSiebelDevops Versão 4.7.8")
+
+        With My.Application.Info.Version
+            Console.WriteLine("ImportacaoSiebelDevops Versão " & .Major & "." & .Minor & "." & .Build)
+        End With
 
         Try
             ''sCFG = "c:\sea630\client\bin\scomm_B10.cfg"

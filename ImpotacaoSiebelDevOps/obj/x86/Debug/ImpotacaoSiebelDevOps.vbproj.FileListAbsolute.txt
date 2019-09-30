@@ -8,9 +8,6 @@ C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoS
 C:\ImpotacaoSiebelDevOps.exe
 C:\ImpotacaoSiebelDevOps.pdb
 C:\ImpotacaoSiebelDevOps.xml
-C:\Importacao\ImportacaoSiebelDevOps.exe
-C:\Importacao\ImportacaoSiebelDevOps.pdb
-C:\Importacao\ImportacaoSiebelDevOps.xml
 C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
 C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
 C:\Documents and Settings\Administrador\Desktop\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
@@ -40,3 +37,16 @@ C:\Projetos\Regra de Negócio\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x8
 C:\Projetos\Regra de Negócio\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.Resources.resources
 C:\Projetos\Regra de Negócio\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Projetos\Regra de Negócio\ImpotacaoSiebelDevOps\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Importacao\ImportacaoSiebelDevOps.exe
+C:\Importacao\ImportacaoSiebelDevOps.pdb
+C:\Importacao\ImportacaoSiebelDevOps.xml
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelApplicationServer.dll
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\Interop.SiebelDataServer.dll
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.vbproj.ResolveComReference.cache
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\ImpotacaoSiebelDevOps.Resources.resources
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.exe
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.xml
+C:\Projetos\Ação de Regras de Negocio\ImpotacaoSiebelDevOps\obj\x86\Debug\ImportacaoSiebelDevOps.pdb
